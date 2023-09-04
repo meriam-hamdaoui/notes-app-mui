@@ -1,5 +1,10 @@
 import React from "react";
+import { Typography } from "@mui/material";
 
 export default function Notes() {
-  return <div>My Notes</div>;
+  return (
+    <Typography variant="h2" color="textSecondary">
+      My Notes
+    </Typography>
+  );
 }
