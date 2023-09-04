@@ -12,17 +12,29 @@ const useStyle = makeStyles({
 export default function CreateNote() {
   const classes = useStyle();
 
-  const [note, setNote] = useState({
-    title: "",
-    details: "",
-  });
+  //states
+  const [title, setTitle] = useState("");
+  const [titleError, setTitleError] = useState(false);
 
-  const handleChange = (e) =>
-    setNote({ ...note, [e.target.name]: e.target.value });
+  const [details, setDetails] = useState("");
+  const [detailsError, setDetailsError] = useState(false);
 
+  //
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(note);
+
+    setTitleError(false);
+    setDetailsError(false);
+
+    if (title === "") {
+      setTitleError(true);
+    }
+    if (details === "") {
+      setDetailsError(true);
+    }
+    if (title && details) {
+      console.log(title, details);
+    }
   };
 
   return (
@@ -45,7 +57,8 @@ export default function CreateNote() {
           required
           color="secondary"
           fullWidth
-          onChange={handleChange}
+          onChange={(e) => setTitle(e.target.value)}
+          error={titleError}
         />
         <TextField
           className={classes.filed}
@@ -58,7 +71,8 @@ export default function CreateNote() {
           fullWidth
           multiline
           rows={4}
-          onChange={handleChange}
+          onChange={(e) => setDetails(e.target.value)}
+          error={detailsError}
         />
         <Button
           variant="contained"
