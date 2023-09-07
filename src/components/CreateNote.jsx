@@ -1,23 +1,27 @@
 import React, { useState } from "react";
-import { Container, Typography, Button, TextField } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import {
+  Container,
+  Typography,
+  Button,
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
+// import { makeStyles } from "@mui/styles";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-const useStyle = makeStyles({
-  filed: {
-    display: "block",
-  },
-});
-
 export default function CreateNote() {
-  const classes = useStyle();
-
   //states
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState(false);
 
   const [details, setDetails] = useState("");
   const [detailsError, setDetailsError] = useState(false);
+
+  const [category, setCategory] = useState("todos");
 
   //
   const handleSubmit = (e) => {
@@ -33,12 +37,12 @@ export default function CreateNote() {
       setDetailsError(true);
     }
     if (title && details) {
-      console.log(title, details);
+      console.log(title, details, category);
     }
   };
 
   return (
-    <Container>
+    <Container size="sm">
       <Typography
         variant="h6"
         color="textSecondary"
@@ -49,7 +53,6 @@ export default function CreateNote() {
       </Typography>
       <form noValidate autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
         <TextField
-          className={classes.filed}
           name="title"
           sx={{ marginTop: 2, marginBottom: 2 }}
           variant="outlined"
@@ -61,7 +64,6 @@ export default function CreateNote() {
           error={titleError}
         />
         <TextField
-          className={classes.filed}
           name="details"
           sx={{ marginTop: 2, marginBottom: 2 }}
           variant="outlined"
@@ -74,6 +76,35 @@ export default function CreateNote() {
           onChange={(e) => setDetails(e.target.value)}
           error={detailsError}
         />
+        <FormControl>
+          <FormLabel>Note Category</FormLabel>
+          <RadioGroup
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <FormControlLabel
+              value="money"
+              control={<Radio color="secondary" />}
+              label="Money"
+            />
+            <FormControlLabel
+              value="todos"
+              control={<Radio color="secondary" />}
+              label="Todos"
+            />
+            <FormControlLabel
+              value="reminders"
+              control={<Radio color="secondary" />}
+              label="Reminders"
+            />
+            <FormControlLabel
+              value="work"
+              control={<Radio color="secondary" />}
+              label="Work"
+            />
+          </RadioGroup>
+        </FormControl>
+        <br />
         <Button
           variant="contained"
           type="submit"

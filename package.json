@@ -21,7 +21,9 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"yarn run server\" \"yarn run client\"",
+    "client": "react-scripts start",
+    "server": "yarn json-server --watch server/db.json --port 8000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -45,7 +47,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-transform-private-property-in-object": "^7.22.11"
+    "@babel/plugin-transform-private-property-in-object": "^7.22.11",
+    "concurrently": "^8.2.1",
+    "json-server": "^0.17.3"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
