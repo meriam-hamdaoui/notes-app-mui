@@ -9,10 +9,10 @@ export default function Notes() {
     await axios
       .get("http://localhost:8000/notes")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setData([...res.data]);
       })
-      .catch((err) => console.log("err"));
+      .catch((err) => console.log("err", err));
 
   useEffect(() => {
     displayNotes();

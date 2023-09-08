@@ -12,6 +12,9 @@ import {
 } from "@mui/material";
 // import { makeStyles } from "@mui/styles";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import axios from "axios";
+import { nanoid } from "nanoid";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateNote() {
   //states
@@ -23,8 +26,10 @@ export default function CreateNote() {
 
   const [category, setCategory] = useState("todos");
 
+  const navigate = useNavigate();
+
   //
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setTitleError(false);
@@ -37,7 +42,27 @@ export default function CreateNote() {
       setDetailsError(true);
     }
     if (title && details) {
-      console.log(title, details, category);
+      // console.log(title, details, category);
+      await axios
+        .post(
+          "http://localhost:8000/notes",
+          {
+            id: nanoid(),
+            title: title,
+            details: details,
+            category: category,
+          },
+          { headers: { "Content-Type": "application/json" } }
+        )
+        .then((res) => {
+          // console.log("response", res);
+          const { title, details, category } = res.data;
+          setDetails(title);
+          setDetailsError(details);
+          setCategory(category);
+          navigate("/", { replace: true });
+        })
+        .catch((err) => console.error("error", err));
     }
   };
 
